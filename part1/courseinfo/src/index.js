@@ -61,6 +61,7 @@ const Total = (props) => {
 ReactDOM.render(<App />, document.getElementById('root'));
 
 
+
 //1.2 Course Information, Step 2
 import React from 'react';
 import ReactDOM from 'react-dom';
