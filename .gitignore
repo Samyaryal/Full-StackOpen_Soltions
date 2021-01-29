@@ -2,7 +2,7 @@
 **/node_modules
 **/.pnp
 **/.pnp.js
-
+notes.txt
 # testing
 **/coverage
 **/cypress/screenshots/**
@@ -16,7 +16,7 @@
 # linters
 # **/.eslintrc.js*
 # **/.eslintignore
-
+# **/.txt
 # misc
 **/.DS_Store
 **/.env.local
