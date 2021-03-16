@@ -29,17 +29,12 @@ app.get('/', (req, res) => {
   res.send('<h1>Hello World!</h1>')
 })
 
+//3.1: Phonebook backend step1
 app.get('/api/persons/', (req, res) => {
   res.json(notes)
 })
 
-//3.1: Phonebook backend step1
-//getting a single resporce
-app.get('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id)
-  const note = notes.find(note => note.id === id)
-  response.json(note)
-})
+
 
 
 //3.2: Phonebook backend step2
@@ -52,7 +47,15 @@ app.get('/info', (req, res) => {
   })
 
 //3.3: Phonebook backend step3
-
+//getting a single resporce
+app.get('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id)
+  const note = notes.find(note => note.id === id)
+  if (note){
+  response.json(note)
+  }
+  else {response.status(404).end()}
+})
 
 const port = 3001
 app.listen(port)
