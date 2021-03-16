@@ -2,6 +2,10 @@ const express = require ('express');
 const app = express()
 app.use(express.json()) 
 
+//   console.log('Method:', request.method)
+// console.log('Path:  ', request.path)
+// console.log('Body:  ', request.body)
+
 let notes = [
   {
     id: 1,
@@ -70,24 +74,47 @@ app.delete('/api/persons/:id', (request, response) => {
 })
 
 //3.5: Phonebook backend step5
-app.post('/api/persons/', (request, response) => {
-  let newPhonebook = {
-    id: (Math.random (1, 1000)),
-    name: request.body.name,
-    number: request.body.number
-  }
-  const noteid = notes.filter(note => note.id == newPhonebook.id)
-  if(noteid.length > 0){
-    response.send(`item already existed`)
-  }
-  notes.push(newPhonebook)
-  response.send('new phonebook added')
+// app.post('/api/persons/', (request, response) => {
+//   let newPhonebook = {
+//     id: (Math.random (1, 1000)),
+//     name: request.body.name,
+//     number: request.body.number
+//   }
+//   const noteid = notes.filter(note => note.id == newPhonebook.id)
+//   if(noteid.length > 0){
+//     response.send(`item already existed`)
+//   }
+//   notes.push(newPhonebook)
+//   response.send('new phonebook added')
 
+// })
+
+//3.6 Phonebook backend step6 
+app.post('/api/persons/', (req, res) => {
+  const {name, number} = req.body
+  let newPhonebook = {
+        id: (Math.random (1, 1000)),
+        name,
+        number
+      }
+
+  if (!name && !number){
+    res.status(400).json({error : error})
+  }
+  let finding = notes.filter((item => (item.name=== name) || (item.number === number)))
+  if (finding.length > 0){
+    res.status(400).json({error : `name or number already existed`})()
+  }
+  else {
+    notes.push(newPhonebook)
+    res.send(`PhoneBook successfully added`)}
 })
+
 
 const port = 3001
 app.listen(port)
 console.log(`Server running on port ${port}`)
+
 //deleting a single respource 
 // app.delete('/api/notes/:id', (request, response) => {
 //   const id = Number(request.params.id)
@@ -95,21 +122,6 @@ console.log(`Server running on port ${port}`)
 
 //   response.status(204).end()
 // })
-
-//Receiving data
-// app.post('/api/notes', (request, response) => {
-//   const note = request.body
-//   console.log(note)
-//   response.json(note)
-// })
-// app.get('/info', (req, res) => {
-//   const number = req.notes;
-//   if (number.length > 0 ){
-//     return (`Phonebook has a info for ${number} people`) 
-//   }
-// })
-
-
 
 
 //Fetching a single resource
