@@ -69,6 +69,21 @@ app.delete('/api/persons/:id', (request, response) => {
     response.send('Item deleted')}
 })
 
+//3.5: Phonebook backend step5
+app.post('/api/persons/', (request, response) => {
+  let newPhonebook = {
+    id: (Math.random (1, 1000)),
+    name: request.body.name,
+    number: request.body.number
+  }
+  const noteid = notes.filter(note => note.id == newPhonebook.id)
+  if(noteid.length > 0){
+    response.send(`item already existed`)
+  }
+  notes.push(newPhonebook)
+  response.send('new phonebook added')
+
+})
 
 const port = 3001
 app.listen(port)
