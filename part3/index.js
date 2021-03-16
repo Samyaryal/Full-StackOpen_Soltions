@@ -25,16 +25,65 @@ let notes = [
   }
   
 ]
-
 app.get('/', (req, res) => {
   res.send('<h1>Hello World!</h1>')
 })
 
 app.get('/api/persons/', (req, res) => {
   res.json(notes)
-  res.end(JSON.stringify(notes))
 })
+
+//3.1: Phonebook backend step1
+//getting a single resporce
+app.get('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id)
+  const note = notes.find(note => note.id === id)
+  response.json(note)
+})
+
+
+//3.2: Phonebook backend step2
+app.get('/info', (req, res) => { 
+    const date = new Date()
+    date1 = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+    res.send( `Phonebook has info for ${notes.length} people <br/>  <br />
+     ${date} ` )
+
+  })
+
+//3.3: Phonebook backend step3
+
 
 const port = 3001
 app.listen(port)
 console.log(`Server running on port ${port}`)
+//deleting a single respource 
+// app.delete('/api/notes/:id', (request, response) => {
+//   const id = Number(request.params.id)
+//   notes = notes.filter(note => note.id !== id)
+
+//   response.status(204).end()
+// })
+
+//Receiving data
+// app.post('/api/notes', (request, response) => {
+//   const note = request.body
+//   console.log(note)
+//   response.json(note)
+// })
+// app.get('/info', (req, res) => {
+//   const number = req.notes;
+//   if (number.length > 0 ){
+//     return (`Phonebook has a info for ${number} people`) 
+//   }
+// })
+
+
+
+
+//Fetching a single resource
+// app.get('/api/notes/:id', (request, response) => {
+//   const id = request.params.id
+//   const note = notes.find(note => note.id === id)
+//   response.json(note)
+// })
