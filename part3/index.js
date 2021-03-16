@@ -1,6 +1,15 @@
 const express = require ('express');
+const morgan = require('morgan');
 const app = express()
 app.use(express.json()) 
+
+//3.8*: Phonebook backend step8
+// create custome message in the middleweare s
+morgan.token('ob', function (req) {
+  return `${JSON.stringify(req.body)}`
+})
+
+app.use(morgan(':method :url :status :response-time :req[header] :ob'))
 
 //   console.log('Method:', request.method)
 // console.log('Path:  ', request.path)
@@ -90,7 +99,7 @@ app.delete('/api/persons/:id', (request, response) => {
 // })
 
 //3.6 Phonebook backend step6 
-app.post('/api/persons/', (req, res) => {
+app.post('/api/persons/', (req, res,) => {
   const {name, number} = req.body
   let newPhonebook = {
         id: (Math.random (1, 1000)),
@@ -108,8 +117,19 @@ app.post('/api/persons/', (req, res) => {
   else {
     notes.push(newPhonebook)
     res.send(`PhoneBook successfully added`)}
+
 })
 
+// morgan.token(function (tokens, req, res) {
+//   return [
+//     tokens.method(req, res),
+//     tokens.url(req, res),
+//     tokens.status(req, res),
+//     tokens.res(req, res, 'content-length'), '-',
+//     tokens['response-time'](req, res), 'ms'
+//   ].join(' ')
+
+// })
 
 const port = 3001
 app.listen(port)
