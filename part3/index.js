@@ -57,6 +57,19 @@ app.get('/api/persons/:id', (request, response) => {
   else {response.status(404).end()}
 })
 
+//3.4: Phonebook backend step4
+app.delete('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id)
+  const noteIndex = notes.findIndex(note => note.id === id)
+  console.log(noteIndex)
+  if (noteIndex === -1){ //if index not available
+    response.status(404)
+  }
+  else {notes.splice(noteIndex, 1)
+    response.send('Item deleted')}
+})
+
+
 const port = 3001
 app.listen(port)
 console.log(`Server running on port ${port}`)
