@@ -1,0 +1,9 @@
+note over browser: 
+creating a note and submitting the form
+end note
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/note_new_spa
+
+note over server: 
+note received in the form json data
+end note
+server-->browser: New note successfully created
